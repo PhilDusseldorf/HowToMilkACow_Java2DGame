@@ -78,8 +78,10 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D)g;
+        // draw objects in correct order as instantiation order is like layering
         player.draw(g2D);
 
+        // make g2D free for efficiency
         g2D.dispose();
     }
     
