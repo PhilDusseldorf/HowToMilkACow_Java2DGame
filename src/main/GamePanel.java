@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entity.Player;
+import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
 // ATTRIBUTES
@@ -26,6 +27,7 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
     Player player = new Player(this, keyHandler);
+    TileManager tileManager = new TileManager(this);
     
 // GETTERS/SETTERS
     public int getTileSize() {
@@ -74,16 +76,15 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         player.update();
     }
-    
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D)g;
         // draw objects in correct order as instantiation order is like layering
+        tileManager.draw(g2D);
         player.draw(g2D);
 
         // make g2D free for efficiency
         g2D.dispose();
     }
-    
-
 }

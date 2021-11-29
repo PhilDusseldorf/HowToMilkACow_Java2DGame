@@ -1,4 +1,7 @@
 {
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },  
     "java.project.sourcePaths": ["src"],
     "java.project.outputPath": "bin"
 }
