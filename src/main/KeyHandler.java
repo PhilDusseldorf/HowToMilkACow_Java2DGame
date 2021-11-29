@@ -25,19 +25,19 @@ public class KeyHandler implements KeyListener {
     private void handleMovement(KeyEvent e, boolean state) {
         int code = e.getKeyCode();
 
-        if(code == KeyEvent.VK_W) {
+        if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
             upPressed = state;
         }
 
-        if(code == KeyEvent.VK_A) {
+        if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
             leftPressed = state;
         }
 
-        if(code == KeyEvent.VK_S) {
+        if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
             downPressed = state;
         }
 
-        if(code == KeyEvent.VK_D) {
+        if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
             rightPressed = state;
         }
     }

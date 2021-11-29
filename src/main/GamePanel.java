@@ -6,7 +6,10 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Player;
+
 public class GamePanel extends JPanel implements Runnable {
+// ATTRIBUTES
     // Screen Settings
     final int originalTileSize = 16;   // 16 x 16 per tile
     final int scale = 3;
@@ -22,12 +25,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
+    Player player = new Player(this, keyHandler);
+    
+// GETTERS/SETTERS
+    public int getTileSize() {
+        return tileSize;
+    }
 
-    // Set player's default position
-    int playerPositionX = 100;
-    int playerPositionY = 100;
-    int playerSpeed = 4;
-
+// CONSTRUCTORS
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.DARK_GRAY);
@@ -36,6 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
+// METHODS
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
@@ -66,25 +72,16 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        if(keyHandler.upPressed == true) {
-            playerPositionY -= playerSpeed;
-        }
-        else if(keyHandler.downPressed == true) {
-            playerPositionY += playerSpeed;
-        }
-        else if(keyHandler.leftPressed == true) {
-            playerPositionX -= playerSpeed;
-        }
-        else if(keyHandler.rightPressed == true) {
-            playerPositionX += playerSpeed;
-        }
+        player.update();
     }
-
+    
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D)g;
-        g2.setColor(Color.WHITE);
-        g2.fillRect(playerPositionX, playerPositionY, tileSize, tileSize);
-        g2.dispose();
+        Graphics2D g2D = (Graphics2D)g;
+        player.draw(g2D);
+
+        g2D.dispose();
     }
+    
+
 }
