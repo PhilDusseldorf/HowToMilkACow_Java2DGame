@@ -18,7 +18,7 @@ public class App {
         // position the window and make it visible
         window.setLocationRelativeTo(null);
         window.setVisible(true);
-
+    
         gamePanel.startGameThread();
     }
 }

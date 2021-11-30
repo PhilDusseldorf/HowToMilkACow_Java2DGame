@@ -34,7 +34,16 @@ public class GamePanel extends JPanel implements Runnable {
         return tileSize;
     }
 
-// CONSTRUCTORS
+    public int getMaxScreenCol() {
+        return maxScreenCol;
+    }
+
+    public int getMaxSCreenRow() {
+        return maxSCreenRow;
+    }
+
+
+    // CONSTRUCTORS
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.DARK_GRAY);
@@ -53,6 +62,8 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         double drawInterval = 1000/FPS;
         double nextDrawTime = System.currentTimeMillis() + drawInterval;
+
+        onStart();
 
         while(gameThread != null) {
             // Update: update the information like character positions
@@ -73,10 +84,15 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    private void onStart() {
+        tileManager.createNewTileScreen();
+    }
+
     public void update() {
         player.update();
     }
 
+    boolean paintedOnlyOnce;
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D)g;
