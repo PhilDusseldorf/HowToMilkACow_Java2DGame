@@ -1,12 +1,14 @@
 package tile;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Tile {
 // ATTRIBUTES
     protected String tilename;
-    public BufferedImage image;
-    public boolean collision = false;
+    protected BufferedImage image;
+    protected boolean collision = false;
+    public Rectangle boxCollider;
 
 // GETTERS/SETTERS
     public String getTilename() {
@@ -21,6 +23,7 @@ public class Tile {
     public void setCollision(boolean collision) {
         this.collision = collision;
     }
-
-    
+    public Tile() {
+        boxCollider = new Rectangle(0, 0, 48, 48);
+    }
 }

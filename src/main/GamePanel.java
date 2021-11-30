@@ -11,7 +11,16 @@ import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
 // ATTRIBUTES
-    // Screen Settings
+// Singleton
+    private static GamePanel instance;
+    public static synchronized GamePanel getInstance() {
+        if (instance == null) {
+            instance = new GamePanel();
+        }
+        return instance;
+    }
+
+// Screen Settings
     final int originalTileSize = 16;   // 16 x 16 per tile
     final int scale = 3;
 
@@ -27,7 +36,8 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
     Player player = new Player(this, keyHandler);
-    TileManager tileManager = new TileManager(this);
+    TileManager tileManager = TileManager.getInstance();
+    public CollisionDetector collisionDetector = new CollisionDetector();
     
 // GETTERS/SETTERS
     public int getTileSize() {
@@ -43,8 +53,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
 
-    // CONSTRUCTORS
-    public GamePanel() {
+// CONSTRUCTORS
+    private GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.DARK_GRAY);
         this.setDoubleBuffered(true);

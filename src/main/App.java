@@ -8,9 +8,9 @@ public class App {
         window.setTitle("2D Game");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-
+        
+        GamePanel gamePanel = GamePanel.getInstance();
         // make a Panel and add it to the window
-        GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
 
         window.pack();

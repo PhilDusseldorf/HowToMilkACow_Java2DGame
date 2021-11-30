@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import main.GamePanel;
 import main.KeyHandler;
@@ -13,6 +14,7 @@ public class Player extends Entity {
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
+        boxCollider = new Rectangle(6, 16, gamePanel.getTileSize()-12, gamePanel.getTileSize()-16);
         setDefaultValues();
     }
 
@@ -39,6 +41,9 @@ public class Player extends Entity {
         if(keyHandler.rightPressed == true) {
             xPosition += speed;
         }
+
+        collisionOn = false;
+        gamePanel.collisionDetector.CheckTile(this);
     }
 
     public void draw(Graphics2D g) {

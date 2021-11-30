@@ -3,13 +3,11 @@ package tile;
 import main.GamePanel;
 
 public class TileScreen {
-    GamePanel gamePanel;
-    TileManager tileManager;
+    GamePanel gamePanel = GamePanel.getInstance();
+    TileManager tileManager = TileManager.getInstance();
     Tile[][] tileMatrix;
 
-    public TileScreen (TileManager tileManager, GamePanel gamePanel) {
-        this.tileManager = tileManager;
-        this.gamePanel = gamePanel;
+    public TileScreen () {
         tileMatrix = new Tile[gamePanel.getMaxSCreenRow()][gamePanel.getMaxScreenCol()];
     }
 }

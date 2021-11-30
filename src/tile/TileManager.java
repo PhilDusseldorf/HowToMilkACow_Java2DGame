@@ -10,15 +10,22 @@ import javax.imageio.ImageIO;
 import main.GamePanel;
 
 public class TileManager {
+// Singleton
+    private static TileManager instance;
+    public static synchronized TileManager getInstance() {
+        if (instance == null) {
+            instance = new TileManager();
+        }
+        return instance;
+    }
+
 // ATTRIBUTES
     static final File tileDir = new File("res/tiles");
     private List<Tile> tileList = new ArrayList<Tile>();
-    GamePanel gamePanel;
     TileScreen tileScreen;
-
-// CONSTRUCTORS
-    public TileManager(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
+    
+    // CONSTRUCTORS
+    public TileManager() {
         createTileList();
     }
 
@@ -43,7 +50,7 @@ public class TileManager {
 
     public void createNewTileScreen() {
         // create a new TileScreen
-        tileScreen = new TileScreen(this, gamePanel);
+        tileScreen = new TileScreen();
         // iterate through tileMatrix and fill it with grassland
         for (int row = 0; row < tileScreen.tileMatrix.length; row++) {
             for (int col = 0; col < tileScreen.tileMatrix[row].length; col++) {
@@ -57,8 +64,7 @@ public class TileManager {
         // iterate through tileMatrix and draw every tile to g2D
         for (int row = 0; row < tileScreen.tileMatrix.length; row++) {
             for (int col = 0; col < tileScreen.tileMatrix[row].length; col++) {
-                //System.out.println(tileScreen.tileMatrix[row][col].tilename + (col+1));
-                g2D.drawImage(tileScreen.tileMatrix[row][col].image, gamePanel.getTileSize() *col, gamePanel.getTileSize() *row, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+                g2D.drawImage(tileScreen.tileMatrix[row][col].image, GamePanel.getInstance().getTileSize() *col, GamePanel.getInstance().getTileSize() *row, GamePanel.getInstance().getTileSize(), GamePanel.getInstance().getTileSize(), null);
             }
         }
     }
