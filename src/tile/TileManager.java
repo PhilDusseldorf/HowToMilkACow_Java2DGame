@@ -22,8 +22,17 @@ public class TileManager {
 // ATTRIBUTES
     static final File tileDir = new File("res/tiles");
     private List<Tile> tileList = new ArrayList<Tile>();
-    TileScreen tileScreen;
-    
+    private TileScreen tileScreen;
+
+// Getters/Setters
+    public TileScreen getTileScreen() {
+        return tileScreen;
+    }
+
+    public void setTileScreen(TileScreen tileScreen) {
+        this.tileScreen = tileScreen;
+    }
+
     // CONSTRUCTORS
     public TileManager() {
         createTileList();
@@ -38,7 +47,7 @@ public class TileManager {
                     newTile.tilename = tileFile.getName().replace(".png", "");
                     newTile.image =ImageIO.read(tileFile);
                     if (newTile.tilename.contains("collide")) {  // all non-walkable tiles HAVE to start with collide
-                        newTile.collision = true;
+                        newTile.collidable = true;
                     }
                     tileList.add(newTile);
                 } catch (Exception e) {
@@ -54,7 +63,13 @@ public class TileManager {
         // iterate through tileMatrix and fill it with grassland
         for (int row = 0; row < tileScreen.tileMatrix.length; row++) {
             for (int col = 0; col < tileScreen.tileMatrix[row].length; col++) {
-                tileScreen.tileMatrix[row][col] = tileList.get(2);
+                int tileIndex;
+                if (row == 0) {
+                    tileIndex = 0;
+                } else {
+                    tileIndex = 2;
+                }
+                tileScreen.tileMatrix[row][col] = tileList.get(tileIndex);
             }
         }
 

@@ -10,7 +10,6 @@ import entity.Player;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
-// ATTRIBUTES
 // Singleton
     private static GamePanel instance;
     public static synchronized GamePanel getInstance() {
@@ -19,6 +18,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
         return instance;
     }
+// ATTRIBUTES
 
 // Screen Settings
     final int originalTileSize = 16;   // 16 x 16 per tile
@@ -102,7 +102,6 @@ public class GamePanel extends JPanel implements Runnable {
         player.update();
     }
 
-    boolean paintedOnlyOnce;
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D)g;

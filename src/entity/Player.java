@@ -1,31 +1,109 @@
 package entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
+
+import main.CollisionDetector;
 import main.GamePanel;
 import main.KeyHandler;
 
-public class Player extends Entity {
+public class Player extends Entity { 
     GamePanel gamePanel;
     KeyHandler keyHandler;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
-        boxCollider = new Rectangle(6, 16, gamePanel.getTileSize()-12, gamePanel.getTileSize()-16);
         setDefaultValues();
+        createAnimList();
     }
 
     public void setDefaultValues() {
         xPosition = 100;
         yPosition = 100;
         speed = 4;
+        animDir = new File("res/entity/player");
     }
 
     public void update() {
-        playerMovement();
+        setFacing();
+
+        if(CollisionDetector.getInstance().CheckTile(this)) {
+            correctPosition();
+        }
+        else {
+            playerMovement();
+        }
+    }
+
+    private void setFacing() {
+        if(keyHandler.upPressed == true) {
+            facing = Direction.UP;
+        }
+        else if(keyHandler.downPressed == true) {
+            facing = Direction.DOWN;
+        }
+        else if(keyHandler.leftPressed == true) {
+            facing = Direction.LEFT;
+        }
+        else if(keyHandler.rightPressed == true) {
+            facing = Direction.RIGHT;
+        }
+        System.out.println("Facing: " + facing);
+    }
+    
+    private BufferedImage setAnimation() {
+        // count when to switch to the second picture
+        animCounter++;
+        if (animCounter >= animDelay) {
+            picSwitch = !picSwitch;
+            animCounter = 0;
+        }
+        // choose the correct animation by where the entity is facing
+        switch (facing) {
+            default:
+                if (picSwitch) {
+                    return animList.get(0);
+                } else {
+                    return animList.get(1);
+                }
+            case LEFT:
+                if (picSwitch) {
+                    return animList.get(2);
+                } else {
+                    return animList.get(3);
+                }
+            case RIGHT:
+                if (picSwitch) {
+                    return animList.get(4);
+                } else {
+                    return animList.get(5);
+                }
+            case UP:
+                if (picSwitch) {
+                    return animList.get(6);
+                } else {
+                    return animList.get(7);
+                }
+        }
+    }
+
+    private void correctPosition() {
+        if(keyHandler.upPressed == true) {
+            yPosition += speed+2;
+        }
+        else if(keyHandler.downPressed == true) {
+            yPosition -= speed+2;
+        }
+        else if(keyHandler.leftPressed == true) {
+            xPosition += speed+2;
+        }
+        else if(keyHandler.rightPressed == true) {
+            xPosition -= speed;
+        }
     }
 
     private void playerMovement() {
@@ -42,12 +120,30 @@ public class Player extends Entity {
             xPosition += speed;
         }
 
-        collisionOn = false;
-        gamePanel.collisionDetector.CheckTile(this);
+    }
+    
+    @Override
+    public void createAnimList() {
+        if(animDir.isDirectory()) {
+            for (File anim : animDir.listFiles()) {
+                try {
+                    BufferedImage newImage = ImageIO.read(anim);
+                    animList.add(newImage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            for (BufferedImage i : animList) {
+                System.out.println(i.getClass().getName());
+            }
+        }
     }
 
     public void draw(Graphics2D g) {
-        g.setColor(Color.WHITE);
-        g.fillRect(xPosition, yPosition, gamePanel.getTileSize(), gamePanel.getTileSize());
+        //Placeholder Square
+        // g.setColor(Color.WHITE);
+        // g.fillRect(xPosition, yPosition, gamePanel.getTileSize(), gamePanel.getTileSize());
+        curAnim = setAnimation();
+        g.drawImage(curAnim, xPosition, yPosition, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
     }
 }
