@@ -29,13 +29,16 @@ public class Player extends Entity {
     }
 
     public void update() {
-        setFacing();
-
+        playerMovement();
+    }
+    
+    private void playerMovement() {
+        // detect collisions first
         if(CollisionDetector.getInstance().CheckTile(this)) {
             correctPosition();
-        }
-        else {
-            playerMovement();
+        } else {
+            setFacing();
+            movePlayer();
         }
     }
 
@@ -55,58 +58,23 @@ public class Player extends Entity {
         System.out.println("Facing: " + facing);
     }
     
-    private BufferedImage setAnimation() {
-        // count when to switch to the second picture
-        animCounter++;
-        if (animCounter >= animDelay) {
-            picSwitch = !picSwitch;
-            animCounter = 0;
-        }
-        // choose the correct animation by where the entity is facing
-        switch (facing) {
-            default:
-                if (picSwitch) {
-                    return animList.get(0);
-                } else {
-                    return animList.get(1);
-                }
-            case LEFT:
-                if (picSwitch) {
-                    return animList.get(2);
-                } else {
-                    return animList.get(3);
-                }
-            case RIGHT:
-                if (picSwitch) {
-                    return animList.get(4);
-                } else {
-                    return animList.get(5);
-                }
-            case UP:
-                if (picSwitch) {
-                    return animList.get(6);
-                } else {
-                    return animList.get(7);
-                }
-        }
-    }
-
     private void correctPosition() {
-        if(keyHandler.upPressed == true) {
-            yPosition += speed+2;
+        if(facing == Direction.UP) {
+            yPosition += speed;
         }
-        else if(keyHandler.downPressed == true) {
-            yPosition -= speed+2;
+        else if(facing == Direction.DOWN) {
+            yPosition -= speed;
         }
-        else if(keyHandler.leftPressed == true) {
-            xPosition += speed+2;
+        else if(facing == Direction.LEFT) {
+            xPosition += speed;
         }
-        else if(keyHandler.rightPressed == true) {
+        else if(facing == Direction.RIGHT) {
             xPosition -= speed;
         }
     }
-
-    private void playerMovement() {
+    
+    private void movePlayer() {
+        // move the player by press of key
         if(keyHandler.upPressed == true) {
             yPosition -= speed;
         }
@@ -119,7 +87,43 @@ public class Player extends Entity {
         if(keyHandler.rightPressed == true) {
             xPosition += speed;
         }
-
+        
+    }
+    
+    private BufferedImage setAnimation() {
+        // count when to switch to the second picture
+        animCounter++;
+        if (animCounter >= animDelay) {
+            picSwitch = !picSwitch;
+            animCounter = 0;
+        }
+        // choose the correct animation by where the entity is facing
+        switch (facing) {
+            default:
+            if (picSwitch) {
+                return animList.get(0);
+            } else {
+                return animList.get(1);
+            }
+            case LEFT:
+            if (picSwitch) {
+                return animList.get(2);
+            } else {
+                return animList.get(3);
+            }
+            case RIGHT:
+            if (picSwitch) {
+                return animList.get(4);
+            } else {
+                return animList.get(5);
+            }
+            case UP:
+            if (picSwitch) {
+                return animList.get(6);
+            } else {
+                return animList.get(7);
+            }
+        }
     }
     
     @Override
