@@ -32,8 +32,8 @@ public class CollisionDetector {
                 Tile curTile = tileScreen.getTileMatrix()[row][col];
                 if(curTile.isCollidable()) {
                     if(entityBoxCollider.intersects(new Rectangle(col * tileSize, row * tileSize, tileSize, tileSize))) {
-                        System.out.println("At " + row + "/" + col + ":");
-                        System.out.println("Collision detected");
+                        // System.out.println("At " + row + "/" + col + ":");
+                        // System.out.println("Collision detected");
                         return true;
                     }
                 }

@@ -41,6 +41,27 @@ public class Player extends Entity {
             movePlayer();
         }
     }
+    
+    private void correctPosition() {
+        if(facing == Direction.UP) {
+            yPosition += speed;
+            if(CollisionDetector.getInstance().CheckTile(this)) {
+                xPosition += speed;
+            }
+        }
+        if(facing == Direction.DOWN) {
+            yPosition -= speed;
+            if(CollisionDetector.getInstance().CheckTile(this)) {
+                xPosition += speed;
+            }
+        }
+        if(facing == Direction.LEFT) {
+            xPosition += speed;
+        }
+        if(facing == Direction.RIGHT) {
+            xPosition -= speed;
+        }
+    }
 
     private void setFacing() {
         if(keyHandler.upPressed == true) {
@@ -55,22 +76,7 @@ public class Player extends Entity {
         else if(keyHandler.rightPressed == true) {
             facing = Direction.RIGHT;
         }
-        System.out.println("Facing: " + facing);
-    }
-    
-    private void correctPosition() {
-        if(facing == Direction.UP) {
-            yPosition += speed;
-        }
-        else if(facing == Direction.DOWN) {
-            yPosition -= speed;
-        }
-        else if(facing == Direction.LEFT) {
-            xPosition += speed;
-        }
-        else if(facing == Direction.RIGHT) {
-            xPosition -= speed;
-        }
+        // System.out.println("Facing: " + facing);
     }
     
     private void movePlayer() {
@@ -78,13 +84,13 @@ public class Player extends Entity {
         if(keyHandler.upPressed == true) {
             yPosition -= speed;
         }
-        if(keyHandler.downPressed == true) {
+        else if(keyHandler.downPressed == true) {
             yPosition += speed;
         }
-        if(keyHandler.leftPressed == true) {
+        else if(keyHandler.leftPressed == true) {
             xPosition -= speed;
         }
-        if(keyHandler.rightPressed == true) {
+        else if(keyHandler.rightPressed == true) {
             xPosition += speed;
         }
         

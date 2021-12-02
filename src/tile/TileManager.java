@@ -64,7 +64,10 @@ public class TileManager {
         for (int row = 0; row < tileScreen.tileMatrix.length; row++) {
             for (int col = 0; col < tileScreen.tileMatrix[row].length; col++) {
                 int tileIndex;
-                if (row == 0) {
+                if (row == 0 || 
+                        col == 0 || 
+                        col == tileScreen.tileMatrix[row].length-1 ||
+                        row == tileScreen.tileMatrix.length-1) {
                     tileIndex = 0;
                 } else {
                     tileIndex = 2;
