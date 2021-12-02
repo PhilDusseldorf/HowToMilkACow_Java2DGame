@@ -26,34 +26,31 @@ public class Player extends Entity {
         yPosition = 100;
         speed = 4;
         animDir = new File("res/entity/player");
+        // set the size of the boxCollider
+        boxCollider.add(10*3, 8*3);
     }
 
     public void update() {
-        playerMovement();
+        entityMovement();
+        updateBoxCollider();
     }
     
-    private void playerMovement() {
+    private void entityMovement() {
         // detect collisions first
         if(CollisionDetector.getInstance().CheckTile(this)) {
             correctPosition();
         } else {
             setFacing();
-            movePlayer();
+            moveEntity();
         }
     }
     
     private void correctPosition() {
         if(facing == Direction.UP) {
             yPosition += speed;
-            if(CollisionDetector.getInstance().CheckTile(this)) {
-                xPosition += speed;
-            }
         }
         if(facing == Direction.DOWN) {
             yPosition -= speed;
-            if(CollisionDetector.getInstance().CheckTile(this)) {
-                xPosition += speed;
-            }
         }
         if(facing == Direction.LEFT) {
             xPosition += speed;
@@ -79,7 +76,7 @@ public class Player extends Entity {
         // System.out.println("Facing: " + facing);
     }
     
-    private void movePlayer() {
+    private void moveEntity() {
         // move the player by press of key
         if(keyHandler.upPressed == true) {
             yPosition -= speed;
@@ -93,7 +90,6 @@ public class Player extends Entity {
         else if(keyHandler.rightPressed == true) {
             xPosition += speed;
         }
-        
     }
     
     private BufferedImage setAnimation() {
@@ -102,6 +98,7 @@ public class Player extends Entity {
         if (animCounter >= animDelay) {
             picSwitch = !picSwitch;
             animCounter = 0;
+            System.out.println(boxCollider.toString());
         }
         // choose the correct animation by where the entity is facing
         switch (facing) {
@@ -146,6 +143,14 @@ public class Player extends Entity {
         }
     }
 
+    @Override
+    public void updateBoxCollider() {
+        // adjusts the position of the boxCollider relativ to the playerPosition
+        boxCollider.x = xPosition+(2*4);
+        boxCollider.y = yPosition+(6*4);
+    }
+
+    @Override    
     public void draw(Graphics2D g) {
         //Placeholder Square
         // g.setColor(Color.WHITE);

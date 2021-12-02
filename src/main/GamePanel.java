@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Cow;
 import entity.Player;
 import tile.TileManager;
 
@@ -36,6 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
     Player player = new Player(this, keyHandler);
+    Cow cow = new Cow(instance);
     TileManager tileManager = TileManager.getInstance();
     public CollisionDetector collisionDetector = new CollisionDetector();
     
@@ -100,6 +102,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         player.update();
+        cow.update();
     }
 
     public void paintComponent(Graphics g) {
@@ -107,6 +110,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2D = (Graphics2D)g;
         // draw objects in correct order as instantiation order is like layering
         tileManager.draw(g2D);
+        cow.draw(g2D);
         player.draw(g2D);
 
         // make g2D free for efficiency

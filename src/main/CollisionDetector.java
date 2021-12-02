@@ -24,7 +24,7 @@ public class CollisionDetector {
     public boolean CheckTile(Entity entity) {
         int tileSize = GamePanel.getInstance().getTileSize();
         // prepare the entity
-        Rectangle entityBoxCollider = new Rectangle(entity.xPosition, entity.yPosition, tileSize, tileSize);
+        Rectangle entityBoxCollider = entity.boxCollider;
 
         // lazy and slow way: iterate all tiles all the time
         for (int row = 0; row < tileScreen.getTileMatrix().length; row++) {
@@ -39,6 +39,13 @@ public class CollisionDetector {
                 }
             }
         } 
+        return false;
+    }
+
+    public boolean CheckEntityCollision(Entity entity) {
+        // prepare the entity
+        Rectangle entityBoxCollider = entity.boxCollider;
+
         return false;
     }
 }
