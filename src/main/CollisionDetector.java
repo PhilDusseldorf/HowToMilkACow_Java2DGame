@@ -42,10 +42,14 @@ public class CollisionDetector {
         return false;
     }
 
-    public boolean CheckEntityCollision(Entity entity) {
-        // prepare the entity
-        Rectangle entityBoxCollider = entity.boxCollider;
-
-        return false;
+    public boolean CheckEntityCollision(Entity self, Entity other) {
+        // prepare the entitys
+        Rectangle selfBoxCollider = self.boxCollider;
+        Rectangle otherBoxCollider = other.boxCollider;
+        if(selfBoxCollider.intersects(otherBoxCollider)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
