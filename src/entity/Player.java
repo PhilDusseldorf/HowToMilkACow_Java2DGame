@@ -143,9 +143,6 @@ public class Player extends Entity {
                     e.printStackTrace();
                 }
             }
-            for (BufferedImage i : animList) {
-                System.out.println(i.getClass().getName());
-            }
         }
     }
 
