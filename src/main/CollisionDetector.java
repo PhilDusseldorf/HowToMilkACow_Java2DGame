@@ -47,6 +47,7 @@ public class CollisionDetector {
         Rectangle selfBoxCollider = self.boxCollider;
         Rectangle otherBoxCollider = other.boxCollider;
         if(selfBoxCollider.intersects(otherBoxCollider)) {
+            other.correctPosition();
             return true;
         } else {
             return false;

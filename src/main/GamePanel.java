@@ -41,6 +41,15 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileManager = TileManager.getInstance();
     public CollisionDetector collisionDetector = new CollisionDetector();
     
+ // Getters
+    public Player getPlayer() {
+        return player;
+    }
+    
+    public Cow getCow() {
+        return cow;
+    }
+
 // GETTERS/SETTERS
     public int getTileSize() {
         return tileSize;
@@ -55,7 +64,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
 
-// CONSTRUCTORS
+    // CONSTRUCTORS
     private GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.DARK_GRAY);

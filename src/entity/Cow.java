@@ -40,7 +40,7 @@ public class Cow extends Entity{
 
     private void entityMovement() {
         // detect collisions first
-        if(CollisionDetector.getInstance().CheckTile(this)) {
+        if(CollisionDetector.getInstance().CheckTile(this) ) {
             correctPosition();
         } else {
             // check if duration is still on, otherwise set a new duration
@@ -55,7 +55,8 @@ public class Cow extends Entity{
         }
     }
 
-    private void correctPosition() {
+    @Override
+    public void correctPosition() {
         // Inverts the direction
         switch (facing) {
             case UP:

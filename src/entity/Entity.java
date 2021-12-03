@@ -33,4 +33,5 @@ public abstract class Entity {
     public abstract void createAnimList();
     public abstract void draw(Graphics2D g);
     public abstract void updateBoxCollider();
+    public abstract void correctPosition();
 }

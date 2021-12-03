@@ -37,7 +37,7 @@ public class Player extends Entity {
     
     private void entityMovement() {
         // detect collisions first
-        if(CollisionDetector.getInstance().CheckTile(this)) {
+        if(CollisionDetector.getInstance().CheckTile(this) || CollisionDetector.getInstance().CheckEntityCollision(this, gamePanel.getCow())) {
             correctPosition();
         } else {
             setFacing();
@@ -45,7 +45,8 @@ public class Player extends Entity {
         }
     }
     
-    private void correctPosition() {
+    @Override
+    public void correctPosition() {
         if(facing == Direction.UP) {
             yPosition += speed;
         }
@@ -98,7 +99,6 @@ public class Player extends Entity {
         if (animCounter >= animDelay) {
             picSwitch = !picSwitch;
             animCounter = 0;
-            System.out.println(boxCollider.toString());
         }
         // choose the correct animation by where the entity is facing
         switch (facing) {
