@@ -68,7 +68,7 @@ public class TileManager {
                         col == 0 || 
                         col == tileScreen.tileMatrix[row].length-1 ||
                         row == tileScreen.tileMatrix.length-1) {
-                    tileIndex = 0;
+                    tileIndex = 5;
                 } else {
                     tileIndex = 2;
                 }
