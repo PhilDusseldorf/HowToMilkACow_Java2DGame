@@ -11,7 +11,6 @@ import main.CollisionDetector;
 import main.GamePanel;
 
 public class Cow extends Entity{
-    GamePanel gamePanel;
     int tileSize = 48;
 
     // for random movement
@@ -24,7 +23,8 @@ public class Cow extends Entity{
         createAnimList();
     }
 
-    private void setDefaultValues() {
+    @Override
+    protected void setDefaultValues() {
         xPosition = 400;
         yPosition = 300;
         speed = 1;
@@ -40,7 +40,7 @@ public class Cow extends Entity{
 
     private void entityMovement() {
         // detect collisions first
-        if(CollisionDetector.getInstance().CheckTile(this) ) {
+        if(CollisionDetector.getInstance().CheckTile(this) || CollisionDetector.getInstance().CheckEntityCollision(this, gamePanel.gameObjectsList)) {
             correctPosition();
         } else {
             // check if duration is still on, otherwise set a new duration
@@ -131,7 +131,8 @@ public class Cow extends Entity{
         }
     }
 
-    private BufferedImage setAnimation() {
+    @Override
+    protected BufferedImage setAnimation() {
         // count when to switch to the second picture
         animCounter++;
         if (animCounter >= animDelay) {

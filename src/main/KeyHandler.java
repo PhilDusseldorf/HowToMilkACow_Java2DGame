@@ -8,15 +8,15 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
-        
+        // no actions integrated yet
     }
 
+    
     @Override
     public void keyPressed(KeyEvent e) {
         handleMovement(e, true);
     }
-
+    
     @Override
     public void keyReleased(KeyEvent e) {
         handleMovement(e, false);

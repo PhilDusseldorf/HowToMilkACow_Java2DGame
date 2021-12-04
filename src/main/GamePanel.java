@@ -3,11 +3,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
 import entity.Cow;
 import entity.Player;
+import interfaces.IBoxCollider;
+import item.Bucket;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -21,7 +25,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 // ATTRIBUTES
 
-// Screen Settings
+    // Screen Settings
     final int originalTileSize = 16;   // 16 x 16 per tile
     final int scale = 3;
 
@@ -37,9 +41,11 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
     Player player = new Player(this, keyHandler);
-    Cow cow = new Cow(instance);
+    Cow cow = new Cow(this);
+    Bucket bucket = new Bucket();
     TileManager tileManager = TileManager.getInstance();
     public CollisionDetector collisionDetector = new CollisionDetector();
+    public List<IBoxCollider> gameObjectsList = new ArrayList<IBoxCollider>();
     
  // Getters
     public Player getPlayer() {
@@ -71,9 +77,17 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
+
+        loadGameObjectsList();
+    }
+    
+    // METHODS
+    private void loadGameObjectsList() {
+        gameObjectsList.add(player);
+        gameObjectsList.add(cow);
+        gameObjectsList.add(bucket);
     }
 
-// METHODS
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
@@ -119,6 +133,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2D = (Graphics2D)g;
         // draw objects in correct order as instantiation order is like layering
         tileManager.draw(g2D);
+        bucket.draw(g2D);
         cow.draw(g2D);
         player.draw(g2D);
 

@@ -1,8 +1,11 @@
 package main;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 import entity.Entity;
+import interfaces.IBoxCollider;
+import item.Item;
 import tile.Tile;
 import tile.TileManager;
 import tile.TileScreen;
@@ -42,15 +45,28 @@ public class CollisionDetector {
         return false;
     }
 
-    public boolean CheckEntityCollision(Entity self, Entity other) {
-        // prepare the entitys
+    public boolean CheckEntityCollision(Entity self, List<IBoxCollider> list) {
+        // create the boxColliders
         Rectangle selfBoxCollider = self.boxCollider;
-        Rectangle otherBoxCollider = other.boxCollider;
-        if(selfBoxCollider.intersects(otherBoxCollider)) {
-            other.correctPosition();
-            return true;
-        } else {
-            return false;
+        Rectangle otherBoxCollider = null;
+        // prepare the other BoxCollider
+        for (IBoxCollider other : list) {
+            if (other instanceof Entity) {
+                otherBoxCollider = ((Entity)other).boxCollider;
+                if (otherBoxCollider.equals(selfBoxCollider)) {
+                    otherBoxCollider = null;
+                }
+            }
+
+            if (other instanceof Item) {
+                otherBoxCollider = ((Item)other).boxCollider;
+            }
+
+            if(otherBoxCollider != null && selfBoxCollider.intersects(otherBoxCollider)) {
+                //System.out.println(self.getClass().getName() + " collides with " + other.getClass().getName());
+                return true;
+            }
         }
+        return false;
     }
 }

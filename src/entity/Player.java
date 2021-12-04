@@ -11,7 +11,6 @@ import main.GamePanel;
 import main.KeyHandler;
 
 public class Player extends Entity { 
-    GamePanel gamePanel;
     KeyHandler keyHandler;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
@@ -34,10 +33,10 @@ public class Player extends Entity {
         entityMovement();
         updateBoxCollider();
     }
-    
+
     private void entityMovement() {
         // detect collisions first
-        if(CollisionDetector.getInstance().CheckTile(this) || CollisionDetector.getInstance().CheckEntityCollision(this, gamePanel.getCow())) {
+        if(CollisionDetector.getInstance().CheckTile(this) || CollisionDetector.getInstance().CheckEntityCollision(this, gamePanel.gameObjectsList)) {
             correctPosition();
         } else {
             setFacing();
@@ -93,7 +92,8 @@ public class Player extends Entity {
         }
     }
     
-    private BufferedImage setAnimation() {
+    @Override
+    protected BufferedImage setAnimation() {
         // count when to switch to the second picture
         animCounter++;
         if (animCounter >= animDelay) {
