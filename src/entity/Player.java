@@ -45,7 +45,7 @@ public class Player extends Entity {
         } else if (CollisionDetector.getInstance().CheckEntityCollision(this, gamePanel.gameObjectsList)) {
             IBoxCollider otherObject = returnCollisionObject(gamePanel.gameObjectsList);
             if (otherObject instanceof Entity) {
-                otherObject.pushAway();
+                ((Entity)otherObject).pushAway(facing);
             }
             if (otherObject instanceof Item) {
                 if (((Item)otherObject).isCollectable()) {
@@ -201,5 +201,11 @@ public class Player extends Entity {
         // g.fillRect(xPosition, yPosition, gamePanel.getTileSize(), gamePanel.getTileSize());
         curAnim = setAnimation();
         g.drawImage(curAnim, xPosition, yPosition, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+    }
+
+    @Override
+    public void pushAway(Direction facing) {
+        // not in use
+        
     }
 }

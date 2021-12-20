@@ -180,4 +180,20 @@ public class Cow extends Entity{
         curAnim = setAnimation();
         g.drawImage(curAnim, xPosition, yPosition, tileSize, tileSize, null);
     }
+
+    @Override
+    public void pushAway(Direction facing) {
+        if(facing == Direction.UP) {
+            yPosition -= speed;
+        }
+        if(facing == Direction.DOWN) {
+            yPosition += speed;
+        }
+        if(facing == Direction.LEFT) {
+            xPosition -= speed;
+        }
+        if(facing == Direction.RIGHT) {
+            xPosition += speed;
+        }
+    }
 }
