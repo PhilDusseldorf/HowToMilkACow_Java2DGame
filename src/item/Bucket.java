@@ -34,8 +34,8 @@ public class Bucket extends Item {
     @Override
     protected void setDefaultValues() {
         itemName = "My Bucket";
-        xPosition = 640;
-        yPosition = 450;
+        xPosition = 300;
+        yPosition = 300;
 
         // for collisions
         collidable = true;

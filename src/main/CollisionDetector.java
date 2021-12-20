@@ -80,19 +80,21 @@ public class CollisionDetector {
         Rectangle otherBoxCollider = null;
         // locate player interaction zone
         Point interactionPoint = new Point();
-        int gap = 10;
+        int gap = 12;
         if (myself.facing == Direction.DOWN) {
-            interactionPoint.setLocation(myself.xPosition - gap * 5, myself.yPosition);
+            interactionPoint.setLocation(myself.xPosition + gap*2, myself.yPosition + gap*4);
         }
         if (myself.facing == Direction.UP) {
-            interactionPoint.setLocation(myself.xPosition + gap, myself.yPosition);
+            interactionPoint.setLocation(myself.xPosition + gap*2, myself.yPosition - gap);
         }
         if (myself.facing == Direction.LEFT) {
-            interactionPoint.setLocation(myself.xPosition, myself.yPosition + gap);
+            interactionPoint.setLocation(myself.xPosition - gap, myself.yPosition + gap*2);
         }
-        if (myself.facing == Direction.DOWN) {
-            interactionPoint.setLocation(myself.xPosition, myself.yPosition - gap * 5);
+        if (myself.facing == Direction.RIGHT) {
+            interactionPoint.setLocation(myself.xPosition + gap*4, myself.yPosition + gap*2);
         }
+        System.out.println("interactionPoint at " + interactionPoint.x + "/" + interactionPoint.y);
+        System.out.println("Player at " + myself.xPosition + "/" + myself.yPosition);
         // prepare the other BoxCollider
         for (IBoxCollider other : list) {
             if (other instanceof Entity) {
