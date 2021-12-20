@@ -1,9 +1,11 @@
 package main;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.List;
 
 import entity.Entity;
+import entity.Entity.Direction;
 import interfaces.IBoxCollider;
 import item.Item;
 import tile.Tile;
@@ -45,9 +47,9 @@ public class CollisionDetector {
         return false;
     }
 
-    public boolean CheckEntityCollision(Entity self, List<IBoxCollider> list) {
+    public boolean CheckEntityCollision(Entity myself, List<IBoxCollider> list) {
         // create the boxColliders
-        Rectangle selfBoxCollider = self.boxCollider;
+        Rectangle selfBoxCollider = myself.boxCollider;
         Rectangle otherBoxCollider = null;
         // prepare the other BoxCollider
         for (IBoxCollider other : list) {
@@ -63,10 +65,51 @@ public class CollisionDetector {
             }
 
             if(otherBoxCollider != null && selfBoxCollider.intersects(otherBoxCollider)) {
-                //System.out.println(self.getClass().getName() + " collides with " + other.getClass().getName());
+                //System.out.println(myself.getClass().getName() + " collides with " + other.getClass().getName());
                 return true;
             }
         }
         return false;
+    }
+
+    public static IBoxCollider GetBoxColliderObjectForInteraction(Entity myself, List<IBoxCollider> list) {
+        // object to be returned
+        IBoxCollider returnObject = null;
+        // create the boxColliders
+        Rectangle selfBoxCollider = myself.boxCollider;
+        Rectangle otherBoxCollider = null;
+        // locate player interaction zone
+        Point interactionPoint = new Point();
+        int gap = 10;
+        if (myself.facing == Direction.DOWN) {
+            interactionPoint.setLocation(myself.xPosition - gap * 5, myself.yPosition);
+        }
+        if (myself.facing == Direction.UP) {
+            interactionPoint.setLocation(myself.xPosition + gap, myself.yPosition);
+        }
+        if (myself.facing == Direction.LEFT) {
+            interactionPoint.setLocation(myself.xPosition, myself.yPosition + gap);
+        }
+        if (myself.facing == Direction.DOWN) {
+            interactionPoint.setLocation(myself.xPosition, myself.yPosition - gap * 5);
+        }
+        // prepare the other BoxCollider
+        for (IBoxCollider other : list) {
+            if (other instanceof Entity) {
+                otherBoxCollider = ((Entity)other).boxCollider;
+                if (otherBoxCollider.equals(selfBoxCollider)) {
+                    otherBoxCollider = null;
+                }
+            }
+
+            if (other instanceof Item) {
+                otherBoxCollider = ((Item)other).boxCollider;
+            }
+
+            if(otherBoxCollider != null && otherBoxCollider.contains(interactionPoint)) {
+                returnObject = other;
+            }
+        }
+        return returnObject;
     }
 }

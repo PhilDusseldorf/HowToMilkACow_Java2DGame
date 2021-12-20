@@ -36,6 +36,15 @@ public class Player extends Entity {
     public void update() {
         entityMovement();
         updateBoxCollider();
+        checkForAction();
+    }
+    
+    private void checkForAction() {
+        if (KeyHandler.spaceBar) {
+            IBoxCollider interactionObject = CollisionDetector.GetBoxColliderObjectForInteraction(this, gamePanel.gameObjectsList);
+
+            System.out.println("Interaction Object is " + interactionObject);
+        }
     }
 
     private void entityMovement() {
