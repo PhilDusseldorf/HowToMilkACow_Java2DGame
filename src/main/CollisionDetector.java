@@ -93,8 +93,6 @@ public class CollisionDetector {
         if (myself.facing == Direction.RIGHT) {
             interactionPoint.setLocation(myself.xPosition + gap*4, myself.yPosition + gap*2);
         }
-        System.out.println("interactionPoint at " + interactionPoint.x + "/" + interactionPoint.y);
-        System.out.println("Player at " + myself.xPosition + "/" + myself.yPosition);
         // prepare the other BoxCollider
         for (IBoxCollider other : list) {
             if (other instanceof Entity) {

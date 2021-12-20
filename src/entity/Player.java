@@ -42,8 +42,14 @@ public class Player extends Entity {
     private void checkForAction() {
         if (KeyHandler.spaceBar) {
             IBoxCollider interactionObject = CollisionDetector.GetBoxColliderObjectForInteraction(this, gamePanel.gameObjectsList);
-
-            System.out.println("Interaction Object is " + interactionObject);
+            // check what the collider is of
+            if (interactionObject instanceof NPC) {
+                ((NPC)interactionObject).interact();
+            }
+            if (interactionObject instanceof Item) {
+                ((Item)interactionObject).interact();
+            }
+            // System.out.println("Interaction Object is " + interactionObject);
         }
     }
 
@@ -53,8 +59,8 @@ public class Player extends Entity {
             correctPosition();
         } else if (CollisionDetector.getInstance().CheckEntityCollision(this, gamePanel.gameObjectsList)) {
             IBoxCollider otherObject = returnCollisionObject(gamePanel.gameObjectsList);
-            if (otherObject instanceof Entity) {
-                ((Entity)otherObject).pushAway(facing);
+            if (otherObject instanceof NPC) {
+                ((NPC)otherObject).pushAway(facing);
             }
             if (otherObject instanceof Item) {
                 if (((Item)otherObject).isCollectable()) {
@@ -210,11 +216,5 @@ public class Player extends Entity {
         // g.fillRect(xPosition, yPosition, gamePanel.getTileSize(), gamePanel.getTileSize());
         curAnim = setAnimation();
         g.drawImage(curAnim, xPosition, yPosition, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
-    }
-
-    @Override
-    public void pushAway(Direction facing) {
-        // not in use
-        
     }
 }

@@ -39,4 +39,5 @@ public abstract class Item implements IBoxCollider {
     public abstract void correctPosition();
     public abstract void createAnimList();
     public abstract void draw(Graphics2D g);
+    public abstract void interact();
 }

@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 import main.CollisionDetector;
 import main.GamePanel;
 
-public class Cow extends Entity{
+public class Cow extends NPC{
     int tileSize = 48;
 
     // for random movement
@@ -195,5 +195,11 @@ public class Cow extends Entity{
         if(facing == Direction.RIGHT) {
             xPosition += speed;
         }
+    }
+
+    @Override
+    public void interact() {
+        // TODO milk the cow
+        System.out.println("Player interacted with cow");
     }
 }

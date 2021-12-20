@@ -46,5 +46,11 @@ public class Carrot extends Item {
         // TODO Auto-generated method stub
         
     }
+
+    @Override
+    public void interact() {
+        // TODO Auto-generated method stub
+        
+    }
     
 }

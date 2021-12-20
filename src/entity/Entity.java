@@ -40,5 +40,4 @@ public abstract class Entity implements IBoxCollider{
     public abstract void createAnimList();
     protected abstract BufferedImage setAnimation();
     public abstract void draw(Graphics2D g);
-    public abstract void pushAway(Direction facing);
 }

@@ -58,7 +58,7 @@ public class Bucket extends Item {
 
     @Override
     public void correctPosition() {
-        // TODO Auto-generated method stub
+        // does not move
         
     }
 
@@ -83,5 +83,11 @@ public class Bucket extends Item {
     public void draw(Graphics2D g) {
         curAnim = setAnimation();
         g.drawImage(curAnim, xPosition, yPosition, tileSize, tileSize, null);
+    }
+
+    @Override
+    public void interact() {
+        System.out.println("Player interacted with bucket");
+        isFilled = true;
     }
 }
