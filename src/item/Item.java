@@ -18,6 +18,14 @@ public abstract class Item implements IBoxCollider {
     // for collisions
     public Rectangle boxCollider = new Rectangle();
     protected boolean collidable = false;
+    protected boolean collectable = false;
+
+    public boolean isCollectable() {
+        return collectable;
+    }
+    public void setCollectable(boolean isCollectable) {
+        this.collectable = isCollectable;
+    }
 
     // for animation
     protected File imageDir;

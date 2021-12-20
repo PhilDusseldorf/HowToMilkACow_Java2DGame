@@ -1,11 +1,15 @@
 package entity;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import interfaces.IBoxCollider;
+import item.Item;
 import main.CollisionDetector;
 import main.GamePanel;
 import main.KeyHandler;
@@ -36,12 +40,52 @@ public class Player extends Entity {
 
     private void entityMovement() {
         // detect collisions first
-        if(CollisionDetector.getInstance().CheckTile(this) || CollisionDetector.getInstance().CheckEntityCollision(this, gamePanel.gameObjectsList)) {
+        if(CollisionDetector.getInstance().CheckTile(this)) {
             correctPosition();
+        } else if (CollisionDetector.getInstance().CheckEntityCollision(this, gamePanel.gameObjectsList)) {
+            IBoxCollider otherObject = returnCollisionObject(gamePanel.gameObjectsList);
+            if (otherObject instanceof Entity) {
+                otherObject.pushAway();
+            }
+            if (otherObject instanceof Item) {
+                if (((Item)otherObject).isCollectable()) {
+                    collectItem();
+                } else {
+                    correctPosition();
+                }
+            }
         } else {
             setFacing();
             moveEntity();
         }
+    }
+
+    private void collectItem() {
+        // TODO: Collect an item and destroy the object in game
+    }
+
+    private IBoxCollider returnCollisionObject(List<IBoxCollider> list) {
+        // create the boxCollider
+        Rectangle otherBoxCollider = null;
+        // prepare the other BoxCollider
+        for (IBoxCollider other : list) {
+            if (other instanceof Entity) {
+                otherBoxCollider = ((Entity)other).boxCollider;
+                if (otherBoxCollider.equals(boxCollider)) {
+                    otherBoxCollider = null;
+                }
+            }
+
+            if (other instanceof Item) {
+                otherBoxCollider = ((Item)other).boxCollider;
+            }
+
+            if(otherBoxCollider != null && boxCollider.intersects(otherBoxCollider)) {
+                //System.out.println(self.getClass().getName() + " collides with " + other.getClass().getName());
+                return other;
+            }
+        }
+        return null;
     }
     
     @Override
