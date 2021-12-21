@@ -46,6 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileManager = TileManager.getInstance();
     public CollisionDetector collisionDetector = new CollisionDetector();
     public List<IBoxCollider> gameObjectsList = new ArrayList<IBoxCollider>();
+    public UI ui = new UI(this);
     
  // Getters
     public Player getPlayer() {
@@ -136,6 +137,7 @@ public class GamePanel extends JPanel implements Runnable {
         bucket.draw(g2D);
         cow.draw(g2D);
         player.draw(g2D);
+        ui.draw(g2D);
 
         // make g2D free for efficiency
         g2D.dispose();

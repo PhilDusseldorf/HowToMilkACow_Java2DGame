@@ -12,6 +12,9 @@ import main.GamePanel;
 
 public class Cow extends NPC{
     int tileSize = 48;
+    public boolean gotMilk = true;
+    int timeToGenerateMilk = 5*30; // 15 seconds
+    int milkTimer;
 
     // for random movement
     int moveDuration;
@@ -36,6 +39,14 @@ public class Cow extends NPC{
     public void update() {
         entityMovement();
         updateBoxCollider();
+        regenerateMilk();
+    }
+
+    private void regenerateMilk() {
+        if (!gotMilk && milkTimer++ == timeToGenerateMilk) {
+            gotMilk = true;
+            milkTimer = 0;
+        }
     }
 
     private void entityMovement() {
@@ -199,7 +210,8 @@ public class Cow extends NPC{
 
     @Override
     public void interact() {
-        // TODO milk the cow
         System.out.println("Player interacted with cow");
+        gotMilk = false;
+        gamePanel.getPlayer().gotMilk = true;
     }
 }

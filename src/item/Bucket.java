@@ -6,6 +6,8 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import main.GamePanel;
+
 
 public class Bucket extends Item {
     // Attributes
@@ -88,6 +90,9 @@ public class Bucket extends Item {
     @Override
     public void interact() {
         System.out.println("Player interacted with bucket");
-        isFilled = true;
+        if (GamePanel.getInstance().getPlayer().gotMilk) {
+            isFilled = true;
+            GamePanel.getInstance().getPlayer().gotMilk = false;
+        } 
     }
 }

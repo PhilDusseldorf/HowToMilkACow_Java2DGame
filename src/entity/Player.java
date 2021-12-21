@@ -16,6 +16,7 @@ import main.KeyHandler;
 
 public class Player extends Entity { 
     KeyHandler keyHandler;
+    public boolean gotMilk = false;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
